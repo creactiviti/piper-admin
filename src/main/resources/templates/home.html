@@ -35,12 +35,58 @@
 			<table id="table" class="table">
 				<thead>
 					<tr>
-						<th data-field="id">Item ID</th>
-						<th data-field="name">Item Name</th>
-						<th data-field="price">Item Price</th>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Pipeline</th>
+						<th>Started</th>
+						<th>Ended</th>
+						<th>Status</th>
 					</tr>
 				</thead>
+				<tbody>
+				  <#list jobs.items as job>
+				    <tr>
+				       <td>${job.id}</td>
+				       <td>${job.name}</td>
+				       <td>${job.pipelineId}</td>
+				       <td>${job.startTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</td>
+				       <td>
+				         <#if job.endTime??>${job.endTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</#if>
+				       </td>
+				       <td>${job.status}</td>
+				    </tr>
+				  </#list>
+				</tbody>
 			</table>
+
+			<ul class="pagination">
+			    <#if page &gt; 1>
+				    <li>
+				        <a href="/?p=1">&lt;&lt;</a>
+				    </li>
+			    </#if>
+			    <#if page &gt; 2>
+			      <li>
+			        <a href="/?p=${page-2}">&lt;</a>
+			      </li>
+			    </#if>
+			    <#list (page &gt; 1)?then(page-1,page)..(page+5 &gt; jobs.totalPages)?then(jobs.totalPages,page+5) as i>
+				  <li <#if page==i>class="active"</#if>>
+				     <a href="/?p=${i}">${i}</a>
+				  </li>
+				</#list>
+			    <#if page+5 &lt; jobs.totalPages>
+			      <li>
+			        <a href="/?p=${page+6}">&gt;</a>
+			      </li>
+			    </#if>
+			    <#if page &lt; jobs.totalPages>
+				    <li>
+				        <a href="/?p=${jobs.totalPages}">&gt;&gt;</a>
+				    </li>
+			    </#if>
+			</ul>
+			
 		</div>
 
 	</div><!-- /.container -->
