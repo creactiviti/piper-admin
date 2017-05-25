@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 @Controller
 public class JobsController {
 
@@ -17,6 +20,12 @@ public class JobsController {
   
   @Value("${piper.api.url}")
   private String api = "http://localhost:8080"; 
+  
+  private final ObjectMapper json = new ObjectMapper ();
+  
+  public JobsController() {
+    json.enable(SerializationFeature.INDENT_OUTPUT);
+  }
   
   @GetMapping("/jobs")
   public String list (@RequestParam(value="p",defaultValue="1") Integer aPage, Model aModel) {
@@ -30,6 +39,7 @@ public class JobsController {
   public String get (@PathVariable("id") String aJobId, Model aModel) {
     Map<String,Object> jobs = rest.getForObject(String.format("%s/jobs/%s",api,aJobId), Map.class);
     aModel.addAttribute("job",jobs);
+    aModel.addAttribute("json",json);
     return "job";
   }
   
