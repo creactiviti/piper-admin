@@ -16,6 +16,9 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/starter-template.css" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   </head>
 
@@ -32,7 +35,7 @@
     <div class="container">
 
 		<div class="starter-template">
-			<table id="table" class="table">
+			<table id="table" class="table table-bordered">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -45,7 +48,7 @@
 				</thead>
 				<tbody>
 				  <#list jobs.items as job>
-				    <tr>
+				    <tr <#if job.status=='COMPLETED'>class="table-success"</#if> <#if job.status=='FAILED'>class="table-warning"</#if>>
 				       <td>${job.id}</td>
 				       <td>${job.name}</td>
 				       <td>${job.pipelineId}</td>
@@ -62,27 +65,29 @@
 			<ul class="pagination">
 			    <#if page &gt; 1>
 				    <li>
-				        <a href="/?p=1">&lt;&lt;</a>
+				        <a href="?p=1">&lt;&lt;</a>
 				    </li>
 			    </#if>
 			    <#if page &gt; 2>
 			      <li>
-			        <a href="/?p=${page-2}">&lt;</a>
+			        <a href="?p=${page-2}">&lt;</a>
 			      </li>
 			    </#if>
-			    <#list (page &gt; 1)?then(page-1,page)..(page+5 &gt; jobs.totalPages)?then(jobs.totalPages,page+5) as i>
-				  <li <#if page==i>class="active"</#if>>
-				     <a href="/?p=${i}">${i}</a>
-				  </li>
-				</#list>
+			    <#if jobs.totalItems &gt; 0 >
+				    <#list (page &gt; 1)?then(page-1,page)..(page+5 &gt; jobs.totalPages)?then(jobs.totalPages,page+5) as i>
+					  <li <#if page==i>class="active"</#if>>
+					     <a href="?p=${i}">${i}</a>
+					  </li>
+					</#list>
+				</#if>
 			    <#if page+5 &lt; jobs.totalPages>
 			      <li>
-			        <a href="/?p=${page+6}">&gt;</a>
+			        <a href="?p=${page+6}">&gt;</a>
 			      </li>
 			    </#if>
 			    <#if page &lt; jobs.totalPages>
 				    <li>
-				        <a href="/?p=${jobs.totalPages}">&gt;&gt;</a>
+				        <a href="?p=${jobs.totalPages}">&gt;&gt;</a>
 				    </li>
 			    </#if>
 			</ul>
@@ -90,13 +95,6 @@
 		</div>
 
 	</div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
   </body>
 </html>
