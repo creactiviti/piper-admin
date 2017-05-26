@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +46,20 @@ public class JobsController {
     aModel.addAttribute("job",job);
     aModel.addAttribute("json",json);
     return "job";
+  }
+  
+  @ResponseBody
+  @GetMapping("/jobs/{id}/restart")
+  public String restart (@PathVariable("id") String aJobId) {
+    rest.put(String.format("%s/jobs/%s/restart",api,aJobId), Map.class);
+    return "OK";
+  }
+  
+  @ResponseBody
+  @GetMapping("/jobs/{id}/stop")
+  public String stop (@PathVariable("id") String aJobId) {
+    rest.put(String.format("%s/jobs/%s/stop",api,aJobId), Map.class);
+    return "OK";
   }
   
 }

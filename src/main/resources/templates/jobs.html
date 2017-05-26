@@ -30,16 +30,45 @@
 				       <td>${job.id}</td>
 				       <td>${job.label}</td>
 				       <td>${job.pipelineId}</td>
-				       <td>${job.startTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</td>
+				       <td><#if job.startTime??>${job.startTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</#if></td>
 				       <td>
 				         <#if job.endTime??>${job.endTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</#if>
 				       </td>
 				       <td>${job.status}</td>
-				       <td><a href="/jobs/${job.id}">View</a></td>
+				       <td>
+				         <a class="btn btn-primary btn-sm" href="/jobs/${job.id}">View</a>
+				         <#if job.status=='FAILED' || job.status=='STOPPED'>
+				           <button class="btn btn-warning btn-sm" onclick="restart('${job.id}')">Restart</button>
+				         </#if>
+				         <#if job.status=='STARTED'>
+				           <button class="btn btn-warning btn-sm" onclick="stop('${job.id}')">Stop</button>
+				         </#if>
+				       </td>
 				    </tr>
 				  </#list>
 				</tbody>
 			</table>
+			
+			<script>
+			  function restart(jobId) {
+				  $.get({
+				    url: '/jobs/'+jobId+'/restart',
+				    success: function() {
+				      location.reload();
+				    }
+			      });
+			  }
+			  
+			  function stop(jobId) {
+				  $.get({
+				    url: '/jobs/'+jobId+'/stop',
+				    success: function() {
+				      location.reload();
+				    }
+			      });
+			  }
+			</script>
+			
 
 			<ul class="pagination">
 			    <#if page &gt; 1>
