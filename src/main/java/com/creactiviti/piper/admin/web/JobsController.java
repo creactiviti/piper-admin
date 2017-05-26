@@ -1,5 +1,7 @@
 package com.creactiviti.piper.admin.web;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -37,8 +39,10 @@ public class JobsController {
   
   @GetMapping("/jobs/{id}")
   public String get (@PathVariable("id") String aJobId, Model aModel) {
-    Map<String,Object> jobs = rest.getForObject(String.format("%s/jobs/%s",api,aJobId), Map.class);
-    aModel.addAttribute("job",jobs);
+    Map<String,Object> job = rest.getForObject(String.format("%s/jobs/%s",api,aJobId), Map.class);
+    List<Map<String,Object>> execution = (List)job.get("execution");
+    Collections.reverse(execution);
+    aModel.addAttribute("job",job);
     aModel.addAttribute("json",json);
     return "job";
   }

@@ -16,7 +16,7 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Name</th>
+						<th>Label</th>
 						<th>Pipeline</th>
 						<th>Started</th>
 						<th>Ended</th>
@@ -28,7 +28,7 @@
 				  <#list jobs.items as job>
 				    <tr <#if job.status=='COMPLETED'>class="table-success"</#if> <#if job.status=='FAILED'>class="table-warning"</#if>>
 				       <td>${job.id}</td>
-				       <td>${job.name}</td>
+				       <td>${job.label}</td>
 				       <td>${job.pipelineId}</td>
 				       <td>${job.startTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</td>
 				       <td>
