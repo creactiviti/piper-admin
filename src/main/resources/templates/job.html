@@ -30,7 +30,7 @@
 				  <#list job.execution as execution>
 				    <tr <#if execution.status=='COMPLETED'>class="table-success"</#if> <#if execution.status=='FAILED'>class="table-warning"</#if>>
 				       <td>${execution.taskNumber}</td>
-				       <td>${execution.label}</td>
+				       <td><#if execution.label??>${execution.label}</#if></td>
 				       <td>${execution.type}</td>
 				       <td>${execution.startTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</td>
 				       <td>
