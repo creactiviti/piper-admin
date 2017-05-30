@@ -36,12 +36,12 @@
 				       </td>
 				       <td>${job.status}</td>
 				       <td>
-				         <a class="btn btn-primary btn-sm" href="/jobs/${job.id}">View</a>
+				         <a class="btn btn-primary btn-sm" href="/jobs/${job.id}">V</a>
 				         <#if job.status=='FAILED' || job.status=='STOPPED'>
-				           <button class="btn btn-warning btn-sm" onclick="restart('${job.id}')">Restart</button>
+				           <button class="btn btn-warning btn-sm" onclick="restart('${job.id}')">R</button>
 				         </#if>
 				         <#if job.status=='STARTED'>
-				           <button class="btn btn-warning btn-sm" onclick="stop('${job.id}')">Stop</button>
+				           <button class="btn btn-danger btn-sm" onclick="stop('${job.id}')">S</button>
 				         </#if>
 				       </td>
 				    </tr>
