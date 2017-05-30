@@ -32,7 +32,7 @@
 				       <td>${execution.taskNumber}</td>
 				       <td><#if execution.label??>${execution.label}</#if></td>
 				       <td>${execution.type}</td>
-				       <td>${execution.startTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</td>
+				       <td><#if execution.startTime??>${execution.startTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</#if></td>
 				       <td>
 				         <#if execution.endTime??>${execution.endTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</#if>
 				       </td>
@@ -48,7 +48,7 @@
 							    <div class="modal-content">
 							      <div class="modal-header">
 							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							        <h4 class="modal-title" id="myModalLabel">${execution.label}</h4>
+							        <h4 class="modal-title" id="myModalLabel"><#if execution.label??>${execution.label}</#if></h4>
 							      </div>
 							      <div class="modal-body">
 							        <pre>${json.writeValueAsString(execution)}</pre>
