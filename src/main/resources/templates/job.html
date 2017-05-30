@@ -36,6 +36,9 @@
 				       <td>
 				         <#if execution.endTime??>${execution.endTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</#if>
 				       </td>
+				       <td>
+				         <#if execution.executionTime??>${execution.executionTime?c}ms</#if>
+				       </td>
 				       <td>${execution.status}</td>
 				       <td>
 					       <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#input-${execution.id}">
