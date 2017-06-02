@@ -21,6 +21,7 @@
 						<th>Started</th>
 						<th>Ended</th>
 						<th>Status</th>
+						<th>Priority</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -35,6 +36,7 @@
 				         <#if job.endTime??>${job.endTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</#if>
 				       </td>
 				       <td>${job.status}</td>
+				       <td>${job.priority}</td>
 				       <td>
 				         <a class="btn btn-primary btn-sm" href="/jobs/${job.id}">V</a>
 				         <#if job.status=='FAILED' || job.status=='STOPPED'>
