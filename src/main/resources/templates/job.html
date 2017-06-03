@@ -31,7 +31,7 @@
 				<tbody>
 				  <#list job.execution as execution>
 				    <tr <#if execution.status=='COMPLETED'>class="table-success"</#if> <#if execution.status=='FAILED'>class="table-warning"</#if>>
-				       <td><#if execution.taskNumber??>${execution.taskNumber}</#if></td>
+				       <td><#if execution.parentId??>&nbsp;&nbsp;</#if><#if execution.taskNumber??>${execution.taskNumber}</#if></td>
 				       <td><#if execution.label??>${execution.label}</#if></td>
 				       <td>${execution.type}</td>
 				       <td><#if execution.startTime??>${execution.startTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</#if></td>
