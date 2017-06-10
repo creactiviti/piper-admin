@@ -35,6 +35,7 @@ public class JobsController {
     Map<String,Object> jobs = rest.getForObject(String.format("%s/jobs?p=%s",api,aPage), Map.class);
     aModel.addAttribute("jobs",jobs);
     aModel.addAttribute("page",aPage);
+    aModel.addAttribute("json",json);
     return "jobs";
   }
   

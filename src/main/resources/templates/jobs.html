@@ -22,13 +22,14 @@
 						<th>Ended</th>
 						<th>Status</th>
 						<th>Priority</th>
+						<th>I/O</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 				  <#list jobs.items as job>
 				    <tr <#if job.status=='COMPLETED'>class="table-success"</#if> <#if job.status=='FAILED'>class="table-warning"</#if>>
-				       <td>${job.id}</td>
+				       <td>${job.id}</td>  
 				       <td>${job.label}</td>
 				       <td>${job.pipelineId}</td>
 				       <td><#if job.startTime??>${job.startTime?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")}</#if></td>
@@ -38,15 +39,58 @@
 				       <td>${job.status}</td>
 				       <td>${job.priority}</td>
 				       <td>
-				         <a class="btn btn-primary btn-sm" href="/jobs/${job.id}">V</a>
+				         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#inputs-${job.id}">
+				  			I
+						 </button>
+				         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#outputs-${job.id}">
+				  			O
+						 </button>
+  	  					<!-- Modal -->
+						<div class="modal fade" id="inputs-${job.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        <h4 class="modal-title" id="myModalLabel">Inputs</h4>
+						      </div>
+						      <div class="modal-body">
+						        <pre>${json.writeValueAsString(job.inputs)}</pre>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						
+						<!-- Modal -->
+						<div class="modal fade" id="outputs-${job.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        <h4 class="modal-title" id="myModalLabel">Outputs</h4>
+						      </div>
+						      <div class="modal-body">
+						        <pre>${json.writeValueAsString(job.outputs)}</pre>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+				       </td>
+				       <td>
+				         <a class="btn btn-primary btn-sm" href="/jobs/${job.id}">View</a>
 				         <#if job.status=='FAILED' || job.status=='STOPPED'>
-				           <button class="btn btn-warning btn-sm" onclick="restart('${job.id}')">R</button>
+				           <button class="btn btn-warning btn-sm" onclick="restart('${job.id}')">Restart</button>
 				         </#if>
 				         <#if job.status=='STARTED'>
-				           <button class="btn btn-danger btn-sm" onclick="stop('${job.id}')">S</button>
-				         </#if>
+				           <button class="btn btn-danger btn-sm" onclick="stop('${job.id}')">Stop</button>
+				         </#if>				         
 				       </td>
-				    </tr>
+				    </tr>  
 				  </#list>
 				</tbody>
 			</table>
